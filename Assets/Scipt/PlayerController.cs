@@ -15,9 +15,9 @@ public class PlayerController : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    
+    private void FixedUpdate()
     {
-        rigid.velocity = joystick.GetMoveVector()*moveSpeed * Time.deltaTime;
+        rigid.velocity = joystick.GetMoveVector() * moveSpeed * Time.fixedDeltaTime;
     }
 }
