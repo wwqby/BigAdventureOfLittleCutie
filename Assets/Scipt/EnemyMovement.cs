@@ -10,12 +10,20 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private SpriteRenderer spawnerIndicator;
     [SerializeField] private float scaleTime;
     [SerializeField] private Player player;
+    private bool hasSpawned;
+
+    [Header("Attack")]
+    [SerializeField] private int damage;
+    private float attackDelay;
+    [SerializeField] private float attackRate;
+    [SerializeField] private float attackTimer;
+
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 0;
     [SerializeField] private float playerDetectionRadius;
+
     [Header("Effects")]
     [SerializeField] private ParticleSystem particle;
-    private bool hasSpawned;
 
     // Start is called before the first frame update
     void Start()
@@ -42,12 +50,26 @@ public class EnemyMovement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
-        if(!hasSpawned){
+    {
+        attackDelay = 1f/attackRate;
+        if (!hasSpawned)
+        {
             return;
         }
         FollowPlayer();
-        TryAttack();
+        if (attackTimer >= attackDelay)
+        {
+            TryAttack();
+        }
+        else
+        {
+            Wait();
+        }
+    }
+
+    private void Wait()
+    {
+        attackTimer += Time.deltaTime;
     }
 
     private void SpawnCompleted()
@@ -66,7 +88,9 @@ public class EnemyMovement : MonoBehaviour
         float distance = Vector2.Distance(player.transform.position, transform.position);
         if (distance < playerDetectionRadius)
         {
-            PassAway();
+            // PassAway();
+            Debug.Log("Attacking");
+            attackTimer = 0;
         }
     }
 

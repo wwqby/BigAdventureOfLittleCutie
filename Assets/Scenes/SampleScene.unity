@@ -6612,6 +6612,10 @@ MonoBehaviour:
   spawnerIndicator: {fileID: 1007689759}
   scaleTime: 0.3
   player: {fileID: 0}
+  damage: 10
+  attackDelay: 1
+  attackRate: 2
+  attackTimer: 0
   moveSpeed: 2
   playerDetectionRadius: 2
   particle: {fileID: 1483119773}
