@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [Header("Components")]
+    [Header("Elements")]
     [SerializeField] private Player player;
 
 

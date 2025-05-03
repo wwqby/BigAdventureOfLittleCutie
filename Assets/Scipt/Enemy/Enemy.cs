@@ -29,11 +29,15 @@ public class Enemy : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool gismos;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         player = FindAnyObjectByType<Player>();
         enemyMovement = GetComponent<EnemyMovement>();
+    }
+
+    void Start()
+    {
+
         if (player == null)
         {
             Debug.LogWarning("Player not found!");
@@ -90,8 +94,8 @@ public class Enemy : MonoBehaviour
         if (distance < playerDetectionRadius)
         {
             // PassAway();
-            Debug.Log("Attacking");
             attackTimer = 0;
+            player.TakeDamage(damage);
         }
     }
 
