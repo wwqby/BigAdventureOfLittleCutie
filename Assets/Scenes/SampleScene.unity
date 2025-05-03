@@ -6588,6 +6588,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1562595583}
+  - component: {fileID: 1562595584}
   - component: {fileID: 1562595582}
   m_Layer: 0
   m_Name: Enemy
@@ -6608,17 +6609,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc20c18f27601ac4096d63ae39576a32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 39578195}
-  spawnerIndicator: {fileID: 1007689759}
-  scaleTime: 0.3
   player: {fileID: 0}
-  damage: 10
-  attackDelay: 1
-  attackRate: 2
-  attackTimer: 0
   moveSpeed: 2
-  playerDetectionRadius: 2
-  particle: {fileID: 1483119773}
 --- !u!4 &1562595583
 Transform:
   m_ObjectHideFlags: 0
@@ -6637,6 +6629,28 @@ Transform:
   - {fileID: 1483119771}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1562595584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562595581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 071e66bf9c5585449859599b7ba44b4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 39578195}
+  spawnerIndicator: {fileID: 1007689759}
+  scaleTime: 0.3
+  player: {fileID: 998574566}
+  damage: 10
+  attackRate: 2
+  attackTimer: 0
+  playerDetectionRadius: 1.4
+  particle: {fileID: 1483119773}
+  gismos: 1
 --- !u!1 &1624789926
 GameObject:
   m_ObjectHideFlags: 0
