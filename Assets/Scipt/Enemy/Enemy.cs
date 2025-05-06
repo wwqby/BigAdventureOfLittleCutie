@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
 public class Enemy : MonoBehaviour
 {
     [Header("components")]
-    private EnemyMovement enemyMovement;
+    [SerializeField] private EnemyMovement enemyMovement;
+    [SerializeField] private TextMeshPro healthText;
 
     [Header("Spawn Related")]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -23,6 +25,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float attackTimer;
     [SerializeField] private float playerDetectionRadius;
 
+    [Header("Health")]
+    [SerializeField] private int health;
+    [SerializeField] private int maxHealth;
     [Header("Effects")]
     [SerializeField] private ParticleSystem particle;
 
@@ -48,6 +53,9 @@ public class Enemy : MonoBehaviour
         LeanTween.scale(spawnerIndicator.gameObject, targetScale, scaleTime)
         .setLoopPingPong(4)
         .setOnComplete(SpawnCompleted);
+
+        health = maxHealth;
+        healthText.text = health.ToString();
     }
 
     private void SetSpriteRendererVisible(bool visible = true)
@@ -110,6 +118,16 @@ public class Enemy : MonoBehaviour
     }
 
 
+    public void TakeDamage(int damage)
+    {
+        int realHealth = Mathf.Min(damage, health);
+        health -= realHealth;
+        healthText.text = health.ToString();
+        if (health <= 0)
+        {
+            PassAway();
+        }
+    }
 
     void OnDrawGizmosSelected()
     {
@@ -118,4 +136,5 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, playerDetectionRadius);
     }
+
 }

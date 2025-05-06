@@ -7,8 +7,9 @@ public class Weapon : MonoBehaviour
 {
 
     [Header("Elements")]
-    [SerializeField]private Transform hitDetection;
-    [SerializeField]private float hitDetectionRadius;
+    [SerializeField] private Transform hitDetection;
+    [SerializeField] private float hitDetectionRadius;
+    [SerializeField] private int damage;
     [Header("Settings")]
     [SerializeField] private float radius;
     [SerializeField] private LayerMask targetMask;
@@ -25,8 +26,9 @@ public class Weapon : MonoBehaviour
     private void Attack()
     {
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(hitDetection.position, hitDetectionRadius, targetMask);
-        foreach (Collider2D hitEnem in hitEnemies){
-            Destroy(hitEnem.gameObject);
+        foreach (Collider2D hitEnem in hitEnemies)
+        {
+            hitEnem.GetComponent<Enemy>().TakeDamage(damage);
         }
     }
 
