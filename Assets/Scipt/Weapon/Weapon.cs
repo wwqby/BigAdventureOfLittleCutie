@@ -6,6 +6,9 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
 
+    [Header("Elements")]
+    [SerializeField]private Transform hitDetection;
+    [SerializeField]private float hitDetectionRadius;
     [Header("Settings")]
     [SerializeField] private float radius;
     [SerializeField] private LayerMask targetMask;
@@ -16,6 +19,15 @@ public class Weapon : MonoBehaviour
     void Update()
     {
         AutoAim();
+        Attack();
+    }
+
+    private void Attack()
+    {
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(hitDetection.position, hitDetectionRadius, targetMask);
+        foreach (Collider2D hitEnem in hitEnemies){
+            Destroy(hitEnem.gameObject);
+        }
     }
 
     private void AutoAim()
@@ -30,11 +42,6 @@ public class Weapon : MonoBehaviour
         transform.up = Vector3.Lerp(transform.up, targetVector, aniLerp);
     }
 
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
 
     private Enemy GetClosetEnemy()
     {
@@ -56,5 +63,13 @@ public class Weapon : MonoBehaviour
             }
         }
         return closetEnemy;
+    }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, radius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(hitDetection.position, hitDetectionRadius);
     }
 }
