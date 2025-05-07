@@ -21,9 +21,11 @@ public class Weapon : MonoBehaviour
     [SerializeField] private Transform hitDetection;
     [SerializeField] private float hitDetectionRadius;
     [SerializeField] private int damage;
+    //攻击速度
     [SerializeField] private float attackRatePerSecond;
-    [SerializeField] private float attackTimer;
+    //攻击间隔
     [SerializeField] private float attackDelay;
+    [SerializeField] private float attackTimer;
     [SerializeField] private List<Enemy> damagedEnemies;
     [Header("Settings")]
     [SerializeField] private float radius;
@@ -34,7 +36,7 @@ public class Weapon : MonoBehaviour
     void Start()
     {
         state = State.Idel;
-        damagedEnemies= new List<Enemy>();
+        damagedEnemies = new List<Enemy>();
     }
 
     // Update is called once per frame
@@ -82,7 +84,6 @@ public class Weapon : MonoBehaviour
     }
     private void ManageAttack()
     {
-        attackDelay = 1f / attackRatePerSecond;
         if (attackTimer >= attackDelay)
         {
             attackTimer = 0;
@@ -92,8 +93,10 @@ public class Weapon : MonoBehaviour
     private void StartAttack()
     {
         state = State.Attack;
+        attackDelay = 1f / attackRatePerSecond;
+        animator.speed = attackRatePerSecond;
         animator.Play("Attack");
-        Attacking();
+        damagedEnemies.Clear();
     }
 
     private void Attacking()
