@@ -5250,7 +5250,7 @@ GameObject:
   - component: {fileID: 5338375895770220227}
   - component: {fileID: 7926946173551216336}
   m_Layer: 6
-  m_Name: Enemy
+  m_Name: Goast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
