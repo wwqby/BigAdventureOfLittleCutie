@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     [Header("components")]
     [SerializeField] private EnemyMovement enemyMovement;
     [SerializeField] private TextMeshPro healthText;
+    [SerializeField] private Collider2D collider2D;
 
     [Header("Spawn Related")]
     [SerializeField] private SpriteRenderer spriteRenderer;
@@ -94,6 +95,7 @@ public class Enemy : MonoBehaviour
     {
         SetSpriteRendererVisible();
         hasSpawned = true;
+        collider2D.enabled = true;
     }
 
 

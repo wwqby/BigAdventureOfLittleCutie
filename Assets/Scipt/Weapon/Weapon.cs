@@ -16,6 +16,7 @@ public class Weapon : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private Animator animator;
+    [SerializeField] private BoxCollider2D boxCollider;
 
     [Header("Attack")]
     [SerializeField] private Transform hitDetection;
@@ -76,6 +77,7 @@ public class Weapon : MonoBehaviour
         if (enemy != null)
         {
             targetVector = (enemy.transform.position - transform.position).normalized;
+            transform.up = targetVector;
             ManageAttack();
         }
         transform.up = Vector3.Lerp(transform.up, targetVector, aniLerp);
@@ -99,7 +101,7 @@ public class Weapon : MonoBehaviour
 
     private void Attacking()
     {
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(hitDetection.position, hitDetectionRadius, targetMask);
+        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(hitDetection.position, boxCollider.bounds.size, hitDetection.localEulerAngles.z,targetMask);
         foreach (Collider2D hitEnem in hitEnemies)
         {
             if (damagedEnemies.Contains(hitEnem.GetComponent<Enemy>()))

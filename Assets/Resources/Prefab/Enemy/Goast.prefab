@@ -5289,6 +5289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMovement: {fileID: 0}
   healthText: {fileID: 5279884611410466786}
+  collider2D: {fileID: 7926946173551216336}
   spriteRenderer: {fileID: 8066555129375203921}
   spawnerIndicator: {fileID: 5570237491553500861}
   scaleTime: 0.3
@@ -5322,7 +5323,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7795320357294777192}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
