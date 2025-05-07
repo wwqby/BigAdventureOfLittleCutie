@@ -30,6 +30,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int maxHealth;
     [Header("Effects")]
     [SerializeField] private ParticleSystem particle;
+    [Header("Actions")]
+    public static Action<int,Vector2> OnTakeDamage;
 
     [Header("Debug")]
     [SerializeField] private bool gismos;
@@ -127,6 +129,7 @@ public class Enemy : MonoBehaviour
         {
             PassAway();
         }
+        OnTakeDamage?.Invoke(damage,transform.position);
     }
 
     void OnDrawGizmosSelected()

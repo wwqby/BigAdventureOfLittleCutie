@@ -71,14 +71,12 @@ public class Weapon : MonoBehaviour
     #region Attack
     private void AutoAim()
     {
-        Debug.Log("Auto Aim");
         Vector3 targetVector = Vector3.up;
         Enemy enemy = GetClosetEnemy();
         if (enemy != null)
         {
             targetVector = (enemy.transform.position - transform.position).normalized;
             ManageAttack();
-            Debug.Log("Auto Aiming");
         }
         transform.up = Vector3.Lerp(transform.up, targetVector, aniLerp);
     }
@@ -115,7 +113,6 @@ public class Weapon : MonoBehaviour
 
     private void StopAttack()
     {
-        Debug.Log("Stop Attack");
         state = State.Idel;
         damagedEnemies.Clear();
     }

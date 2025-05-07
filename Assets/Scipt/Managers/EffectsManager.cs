@@ -7,22 +7,21 @@ public class EffectsManager : MonoBehaviour
     [Header("components")]
     [SerializeField] private DamageText DamageTextPrefab;
     // Start is called before the first frame update
-    void Start()
-    {
 
+    void OnEnable()
+    {
+        Enemy.OnTakeDamage += InitializeEffects;
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDisable()
     {
-
+        Enemy.OnTakeDamage -= InitializeEffects;
     }
 
     [NaughtyAttributes.Button]
-    private void InitializeEffects()
+    private void InitializeEffects(int damage, Vector2 position)
     {
-        Vector3 position = Random.insideUnitCircle * 3f;
-        DamageText instance = Instantiate<DamageText>(DamageTextPrefab, position,Quaternion.identity,transform);
-        instance.ShowDamageText();
+        DamageText instance = Instantiate<DamageText>(DamageTextPrefab, position + Random.insideUnitCircle * 2f, Quaternion.identity, transform);
+        instance.ShowDamageText(damage);
     }
 }
