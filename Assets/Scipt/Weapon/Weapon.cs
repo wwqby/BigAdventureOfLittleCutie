@@ -76,7 +76,7 @@ public class Weapon : MonoBehaviour
         Enemy enemy = GetClosetEnemy();
         if (enemy != null)
         {
-            targetVector = (enemy.transform.position - transform.position).normalized;
+            targetVector = (enemy.gameObject.transform.position - transform.position).normalized;
             transform.up = targetVector;
             ManageAttack();
         }
@@ -138,7 +138,7 @@ public class Weapon : MonoBehaviour
         for (int i = 0; i < enemies.Length; i++)
         {
             Enemy enemy = enemies[i].GetComponent<Enemy>();
-            float distance = Vector3.Distance(enemy.transform.position, transform.position);
+            float distance = Vector3.Distance(enemy.gameObject.transform.position, transform.position);
             if (distance <= minDistance)
             {
                 minDistance = distance;

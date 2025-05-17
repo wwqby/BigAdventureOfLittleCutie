@@ -13,12 +13,12 @@ public class EffectsManager : MonoBehaviour
 
     void OnEnable()
     {
-        Enemy.OnTakeDamage += ShowDamageTextOnPosition;
+        MeleeEnemy.OnTakeDamage += ShowDamageTextOnPosition;
     }
 
     void OnDisable()
     {
-        Enemy.OnTakeDamage -= ShowDamageTextOnPosition;
+        MeleeEnemy.OnTakeDamage -= ShowDamageTextOnPosition;
     }
 
     void Start()
