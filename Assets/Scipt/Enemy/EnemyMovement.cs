@@ -5,31 +5,19 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [Header("Elements")]
-    [SerializeField] private Player player;
-
 
     [Header("Movement")]
-    [SerializeField] private float moveSpeed = 0;
+    [SerializeField] private float moveSpeed;
 
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (player != null)
-            FollowPlayer();
-    }
 
 
-    private void FollowPlayer()
+    public void FollowPlayer(Player player)
     {
         Vector2 direction = (player.transform.position - transform.position).normalized;
         transform.Translate(direction * moveSpeed * Time.deltaTime);
     }
 
-    public void StorePlayer(Player player)
-    {
-        this.player = player;
-    }
+    
 
 }

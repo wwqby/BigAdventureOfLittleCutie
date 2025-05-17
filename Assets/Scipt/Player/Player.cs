@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     [Header("components")]
     [SerializeField] private PlayerHealth PlayerHealth;
+    [SerializeField] private Transform centerPoint;
 
     void Awake()
     {
@@ -27,5 +28,9 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage){
         PlayerHealth.TakeDamage(damage);
+    }
+
+    public Vector2 GetCenterPoint(){
+        return centerPoint.position;
     }
 }

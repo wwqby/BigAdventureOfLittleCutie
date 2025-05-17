@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyMovement))]
-public class Enemy : MonoBehaviour
+[RequireComponent(typeof(EnemyMovement), typeof(RengedEnemyAttack))]
+public class RengedEnemy : MonoBehaviour
 {
     [Header("components")]
     [SerializeField] private EnemyMovement enemyMovement;
+    [SerializeField] private RengedEnemyAttack attack;
     [SerializeField] private TextMeshPro healthText;
     [SerializeField] private Collider2D collider2D;
 
@@ -32,7 +33,7 @@ public class Enemy : MonoBehaviour
     [Header("Effects")]
     [SerializeField] private ParticleSystem particle;
     [Header("Actions")]
-    public static Action<int,Vector2> OnTakeDamage;
+    public static Action<int, Vector2> OnTakeDamage;
 
     [Header("Debug")]
     [SerializeField] private bool gismos;
@@ -41,6 +42,7 @@ public class Enemy : MonoBehaviour
     {
         player = FindAnyObjectByType<Player>();
         enemyMovement = GetComponent<EnemyMovement>();
+        attack = GetComponent<RengedEnemyAttack>();
     }
 
     void Start()
@@ -70,15 +72,18 @@ public class Enemy : MonoBehaviour
             return;
         }
         attackDelay = 1f / attackRate;
-        if (attackTimer >= attackDelay)
+        ManageAttack();
+    }
+
+    private void ManageAttack()
+    {
+        float distance = Vector2.Distance(player.transform.position, transform.position);
+        if (distance > playerDetectionRadius)
         {
-            TryAttack();
+            enemyMovement.FollowPlayer(player);
+            return;
         }
-        else
-        {
-            Wait();
-        }
-        enemyMovement.FollowPlayer(player);
+        attack.TryAttack(player);
     }
 
     private void SetSpriteRendererVisible(bool visible = true)
@@ -86,10 +91,7 @@ public class Enemy : MonoBehaviour
         spriteRenderer.enabled = visible;
         spawnerIndicator.enabled = !visible;
     }
-    private void Wait()
-    {
-        attackTimer += Time.deltaTime;
-    }
+
 
     private void SpawnCompleted()
     {
@@ -98,17 +100,6 @@ public class Enemy : MonoBehaviour
         collider2D.enabled = true;
     }
 
-
-
-    private void TryAttack()
-    {
-        float distance = Vector2.Distance(player.transform.position, transform.position);
-        if (distance < playerDetectionRadius)
-        {
-            attackTimer = 0;
-            player.TakeDamage(damage);
-        }
-    }
 
     private void PassAway()
     {
@@ -130,7 +121,7 @@ public class Enemy : MonoBehaviour
         {
             PassAway();
         }
-        OnTakeDamage?.Invoke(damage,transform.position);
+        OnTakeDamage?.Invoke(damage, transform.position);
     }
 
     void OnDrawGizmosSelected()
