@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 public class RangeWeapon : BaseWeapon
 {
@@ -53,6 +54,7 @@ public class RangeWeapon : BaseWeapon
 
     private void ShootBullet()
     {
+        int damage = GetDamage(out bool isCritical);
         CottonCandyBullet cottonCandyBullet = PlayerBulletManager.bulletPool.Get();
         cottonCandyBullet.Shoot(
             hitDetection.position,
@@ -60,6 +62,7 @@ public class RangeWeapon : BaseWeapon
             damage);
         state = State.Idel;
     }
+
 
 
     #endregion

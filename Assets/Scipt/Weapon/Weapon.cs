@@ -65,6 +65,18 @@ public abstract class BaseWeapon : MonoBehaviour
         return closetEnemy;
     }
 
+
+    protected int GetDamage(out bool isCritical)
+    {
+        if (UnityEngine.Random.Range(1, 101) <= 50)
+        {
+            isCritical = true;
+            return damage * 2;
+        }
+        isCritical = false;
+        return damage;
+    }
+
     #endregion
 
 

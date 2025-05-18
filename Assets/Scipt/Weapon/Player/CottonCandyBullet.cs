@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class CottonCandyBullet : MonoBehaviour
     private Rigidbody2D rig;
     [Header("Settings")]
     [SerializeField] private float moveSpeed;
+    [SerializeField] private LayerMask LayerMask;
     [SerializeField] private Enemy target;
     private int damage;
 
@@ -23,16 +25,23 @@ public class CottonCandyBullet : MonoBehaviour
         {
             return;
         }
-        if (collision.gameObject.TryGetComponent(out Enemy enemy))
+        // if (collision.gameObject.TryGetComponent(out Enemy enemy))
+        if (IsInLayer(collision.gameObject.layer, LayerMask))
         {
             if (!ReleaseBullet())
             {
                 return;
             }
             LeanTween.cancel(gameObject);
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
             enemy.TakeDamage(damage);
             target = enemy;
         }
+    }
+
+    private bool IsInLayer(int layer, LayerMask layerMask)
+    {
+        return ((1 << layer) & layerMask.value) != 0;
     }
 
     public void Shoot(Vector2 from, Vector2 direction, int damage)

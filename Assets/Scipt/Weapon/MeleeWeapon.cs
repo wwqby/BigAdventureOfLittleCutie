@@ -22,7 +22,7 @@ public class MeleeWeapon : BaseWeapon
     }
 
     // Update is called once per frame
-   void Update()
+    void Update()
     {
         switch (state)
         {
@@ -74,6 +74,7 @@ public class MeleeWeapon : BaseWeapon
 
     private void Attacking()
     {
+        int damage = GetDamage(out bool isCritical);
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(hitDetection.position, boxCollider.bounds.size, hitDetection.localEulerAngles.z, targetMask);
         foreach (Collider2D hitEnem in hitEnemies)
         {
