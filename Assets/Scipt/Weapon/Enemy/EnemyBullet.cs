@@ -18,11 +18,10 @@ public class EnemyBullet : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<Player>(out Player player))
         {
-            if (!gameObject.activeSelf)
+            if (!ReleaseBullet())
             {
-                return;//说明已经被其他碰撞销毁
+                return;
             }
-            EnemyBulletManager.pool.Release(this);
             LeanTween.cancel(gameObject);
             player.TakeDamage(damage);
         }
@@ -34,11 +33,21 @@ public class EnemyBullet : MonoBehaviour
         transform.position = from;
         transform.up = direction;
         rig.velocity = direction * moveSpeed;
-        LeanTween.delayedCall(gameObject,2, () =>
+        LeanTween.delayedCall(gameObject, 2, () =>
         {
-            EnemyBulletManager.pool.Release(this);
+            ReleaseBullet();
         });
-        
+
+    }
+
+    private bool ReleaseBullet()
+    {
+        if (!gameObject.activeSelf)
+        {
+            return false;//说明已经被其他碰撞销毁
+        }
+        EnemyBulletManager.pool.Release(this);
+        return true;
     }
 
 }

@@ -20,11 +20,10 @@ public class CottonCandyBullet : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Enemy enemy))
         {
-            if (!gameObject.activeSelf)
+            if (!ReleaseBullet())
             {
-                return;//说明已经被其他碰撞销毁
+                return;
             }
-            PlayerBulletManager.bulletPool.Release(this);
             LeanTween.cancel(gameObject);
             enemy.TakeDamage(damage);
         }
@@ -38,8 +37,18 @@ public class CottonCandyBullet : MonoBehaviour
         rig.velocity = direction * moveSpeed;
         LeanTween.delayedCall(gameObject, 2, () =>
         {
-            PlayerBulletManager.bulletPool.Release(this);
+            ReleaseBullet();
         });
 
+    }
+
+    private bool ReleaseBullet()
+    {
+        if (!gameObject.activeSelf)
+        {
+            return false;//说明已经被其他碰撞销毁
+        }
+        PlayerBulletManager.bulletPool.Release(this);
+        return true;
     }
 }
