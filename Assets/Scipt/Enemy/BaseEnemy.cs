@@ -34,14 +34,14 @@ public abstract class BaseEnemy : MonoBehaviour, Enemy
     [Header("Effects")]
     [SerializeField] protected ParticleSystem particle;
     [Header("Actions")]
-    public static Action<int, Vector2> OnTakeDamage;
+    public static Action<int, bool, Vector2> OnTakeDamage;
 
     [Header("Debug")]
     [SerializeField] protected bool gismos;
 
     public Vector2 CenterPoint => (Vector2)transform.position + collider2D.offset;
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool isCritical)
     {
         int realHealth = Mathf.Min(damage, health);
         health -= realHealth;
@@ -50,7 +50,7 @@ public abstract class BaseEnemy : MonoBehaviour, Enemy
         {
             PassAway();
         }
-        OnTakeDamage?.Invoke(damage, transform.position);
+        OnTakeDamage?.Invoke(damage, isCritical, transform.position);
     }
 
 

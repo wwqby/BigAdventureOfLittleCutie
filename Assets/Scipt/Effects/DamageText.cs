@@ -12,9 +12,10 @@ public class DamageText : MonoBehaviour
     
 
     [NaughtyAttributes.Button]
-    public void ShowDamageText(int damage)
+    public void ShowDamageText(int damage,bool isCritical)
     {
         damageText.text = damage.ToString();
+        damageText.color = isCritical ? Color.yellow : Color.white;
         damageAnimator.Play("DamageShow");
     }
 }

@@ -13,17 +13,17 @@ public class EffectsManager : MonoBehaviour
 
     void OnEnable()
     {
-        MeleeEnemy.OnTakeDamage += ShowDamageTextOnPosition;
+        BaseEnemy.OnTakeDamage += ShowDamageTextOnPosition;
     }
 
     void OnDisable()
     {
-        MeleeEnemy.OnTakeDamage -= ShowDamageTextOnPosition;
+        BaseEnemy.OnTakeDamage -= ShowDamageTextOnPosition;
     }
 
     void Start()
     {
-        DamageTextPool = new ObjectPool<DamageText>(CreateFucc,ActionOnGet,ActionOnRelease,ActionOnDestory);
+        DamageTextPool = new ObjectPool<DamageText>(CreateFucc, ActionOnGet, ActionOnRelease, ActionOnDestory);
     }
 
     #region Pooling
@@ -34,7 +34,7 @@ public class EffectsManager : MonoBehaviour
 
     private void ActionOnRelease(DamageText damageText)
     {
-         damageText.gameObject.SetActive(false);
+        damageText.gameObject.SetActive(false);
     }
 
     private void ActionOnGet(DamageText damageText)
@@ -44,17 +44,18 @@ public class EffectsManager : MonoBehaviour
 
     private DamageText CreateFucc()
     {
-        return Instantiate<DamageText>(DamageTextPrefab,transform);
+        return Instantiate<DamageText>(DamageTextPrefab, transform);
     }
 
     #endregion
 
-    private void ShowDamageTextOnPosition(int damage, Vector2 position)
+    private void ShowDamageTextOnPosition(int damage, bool isCritical, Vector2 position)
     {
         DamageText instance = DamageTextPool.Get();
         instance.transform.position = position + UnityEngine.Random.insideUnitCircle * 2f;
-        instance.ShowDamageText(damage);
-        LeanTween.delayedCall(1.2f,()=>{
+        instance.ShowDamageText(damage,isCritical);
+        LeanTween.delayedCall(1.2f, () =>
+        {
             DamageTextPool.Release(instance);
         });
     }

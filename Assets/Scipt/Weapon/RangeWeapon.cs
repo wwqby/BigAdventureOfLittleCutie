@@ -59,7 +59,7 @@ public class RangeWeapon : BaseWeapon
         cottonCandyBullet.Shoot(
             hitDetection.position,
             transform.up.normalized,
-            damage);
+            damage,isCritical);
         state = State.Idel;
     }
 

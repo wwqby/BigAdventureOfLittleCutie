@@ -82,7 +82,7 @@ public class MeleeWeapon : BaseWeapon
             {
                 continue;
             }
-            hitEnem.GetComponent<Enemy>().TakeDamage(damage);
+            hitEnem.GetComponent<Enemy>().TakeDamage(damage, isCritical);
             damagedEnemies.Add(hitEnem.GetComponent<Enemy>());
         }
     }
