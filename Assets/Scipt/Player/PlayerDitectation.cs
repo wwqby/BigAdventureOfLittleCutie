@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Player))]
 public class PlayerDitectation : MonoBehaviour
 {
     [Header("Components")]
@@ -26,7 +27,7 @@ public class PlayerDitectation : MonoBehaviour
             {
                 return;
             }
-            Destroy(candy.gameObject);
+            candy.Collect(FindAnyObjectByType<Player>());
         }
     }
 }

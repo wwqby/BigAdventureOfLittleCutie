@@ -1,18 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Candy : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+
+    public void Collect(Player player)
     {
-        
+        StartCoroutine(FollowPlayer(player));
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator FollowPlayer(Player player)
     {
-        
+        float timer = 0;
+        Vector2 from = transform.position;
+        while (timer < 1f)
+        {
+            timer += Time.deltaTime;
+            transform.position = Vector2.Lerp(from, player.GetCenterPoint(), timer);
+            yield return null;
+        }
+        Collected();
+    }
+
+    private void Collected()
+    {
+        Destroy(gameObject);
     }
 }
