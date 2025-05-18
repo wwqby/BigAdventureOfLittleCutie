@@ -1,13 +1,24 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cash : MonoBehaviour,ICollecable
+public abstract class BaseCollecable : MonoBehaviour, ICollecable
 {
+
+    protected bool isCollected;
+
+    void OnEnable()
+    {
+        isCollected = false;
+    }
 
     public void Collect(Player player)
     {
+        if (isCollected)
+        {
+            return;
+        }
+        isCollected = true;
         StartCoroutine(FollowPlayer(player));
     }
 
@@ -24,8 +35,6 @@ public class Cash : MonoBehaviour,ICollecable
         Collected();
     }
 
-    private void Collected()
-    {
-        Destroy(gameObject);
-    }
+    protected abstract void Collected();
+
 }
