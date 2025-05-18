@@ -3,138 +3,55 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public abstract class BaseWeapon : MonoBehaviour
 {
-    enum State
+    protected enum State
     {
         GamePause,
         Idel,
         Attack
     }
     [Header("State")]
-    [SerializeField] private State state;
+    [SerializeField] protected State state;
 
     [Header("Components")]
-    [SerializeField] private Animator animator;
-    [SerializeField] private BoxCollider2D boxCollider;
+    [SerializeField] protected Animator animator;
 
     [Header("Attack")]
-    [SerializeField] private Transform hitDetection;
-    [SerializeField] private float hitDetectionRadius;
-    [SerializeField] private int damage;
-    //攻击速度
-    [SerializeField] private float attackRatePerSecond;
-    //攻击间隔
-    [SerializeField] private float attackDelay;
-    [SerializeField] private float attackTimer;
-    [SerializeField] private List<Enemy> damagedEnemies;
+    [SerializeField] protected Transform hitDetection;
+    [SerializeField] protected int damage;
+    [SerializeField] protected float attackRatePerSecond;
+    [SerializeField] protected float attackDelay;
+    [SerializeField] protected float attackTimer;
     [Header("Settings")]
-    [SerializeField] private float radius;
-    [SerializeField] private LayerMask targetMask;
-    [SerializeField] private float aniLerp;
+    [SerializeField] protected float aimRadius;
+    [SerializeField] protected LayerMask targetMask;
+    [SerializeField] protected float aniLerp;
 
 
-    void Start()
+    protected virtual void Start()
     {
         state = State.Idel;
-        damagedEnemies = new List<Enemy>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        switch (state)
-        {
-            case State.Idel:
-                AutoAim();
-                break;
-            case State.Attack:
-                Attacking();
-                break;
-        }
-        //只要不是暂停状态，就始终增加攻击计时器
-        if (state != State.GamePause)
-        {
-            IncreaseTimer();
-        }
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, radius);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(hitDetection.position, hitDetectionRadius);
     }
 
 
     #region Attack
-    private void AutoAim()
-    {
-        Vector3 targetVector = Vector3.up;
-        Enemy enemy = GetClosetEnemy();
-        if (enemy != null)
-        {
-            targetVector = (enemy.gameObject.transform.position - transform.position).normalized;
-            transform.up = targetVector;
-            ManageAttack();
-        }
-        transform.up = Vector3.Lerp(transform.up, targetVector, aniLerp);
-    }
-    private void ManageAttack()
-    {
-        if (attackTimer >= attackDelay)
-        {
-            attackTimer = 0;
-            StartAttack();
-        }
-    }
-    private void StartAttack()
-    {
-        state = State.Attack;
-        attackDelay = 1f / attackRatePerSecond;
-        animator.speed = attackRatePerSecond;
-        animator.Play("Attack");
-        damagedEnemies.Clear();
-    }
-
-    private void Attacking()
-    {
-        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(hitDetection.position, boxCollider.bounds.size, hitDetection.localEulerAngles.z,targetMask);
-        foreach (Collider2D hitEnem in hitEnemies)
-        {
-            if (damagedEnemies.Contains(hitEnem.GetComponent<Enemy>()))
-            {
-                continue;
-            }
-            hitEnem.GetComponent<Enemy>().TakeDamage(damage);
-            damagedEnemies.Add(hitEnem.GetComponent<Enemy>());
-        }
-    }
-
-    private void StopAttack()
-    {
-        state = State.Idel;
-        damagedEnemies.Clear();
-    }
 
 
-
-    private void IncreaseTimer()
+    protected void IncreaseTimer()
     {
         attackTimer += Time.deltaTime;
     }
 
-    private Enemy GetClosetEnemy()
+    protected Enemy GetClosetEnemy()
     {
         Enemy closetEnemy = null;
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, radius, targetMask);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(hitDetection.position, aimRadius, targetMask);
         if (enemies.Length == 0)
         {
             return null;
         }
-        float minDistance = radius;
+        float minDistance = aimRadius;
         for (int i = 0; i < enemies.Length; i++)
         {
             Enemy enemy = enemies[i].GetComponent<Enemy>();
@@ -149,5 +66,13 @@ public class Weapon : MonoBehaviour
     }
 
     #endregion
+
+
+    protected virtual void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, aimRadius);
+
+    }
 
 }

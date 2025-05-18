@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyMovement))]
+[RequireComponent(typeof(EnemyMovement), typeof(CircleCollider2D))]
 public abstract class BaseEnemy : MonoBehaviour, Enemy
 {
 
     [Header("components")]
     [SerializeField] protected EnemyMovement enemyMovement;
     [SerializeField] protected TextMeshPro healthText;
-    [SerializeField] protected Collider2D collider2D;
+    [SerializeField] protected CircleCollider2D collider2D;
 
     [Header("Spawn Related")]
     [SerializeField] protected SpriteRenderer spriteRenderer;
@@ -39,7 +39,7 @@ public abstract class BaseEnemy : MonoBehaviour, Enemy
     [Header("Debug")]
     [SerializeField] protected bool gismos;
 
-
+    public Vector2 CenterPoint => (Vector2)transform.position + collider2D.offset;
 
     public void TakeDamage(int damage)
     {
@@ -50,7 +50,7 @@ public abstract class BaseEnemy : MonoBehaviour, Enemy
         {
             PassAway();
         }
-        OnTakeDamage?.Invoke(damage,transform.position);
+        OnTakeDamage?.Invoke(damage, transform.position);
     }
 
 
@@ -58,6 +58,7 @@ public abstract class BaseEnemy : MonoBehaviour, Enemy
     {
         player = FindAnyObjectByType<Player>();
         enemyMovement = GetComponent<EnemyMovement>();
+        collider2D = GetComponent<CircleCollider2D>();
     }
 
     protected virtual void Start()
@@ -93,7 +94,8 @@ public abstract class BaseEnemy : MonoBehaviour, Enemy
         collider2D.enabled = true;
     }
 
-    protected bool CanAttack(){
+    protected bool CanAttack()
+    {
         return hasSpawned;
     }
 

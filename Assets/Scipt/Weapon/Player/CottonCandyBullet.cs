@@ -1,16 +1,15 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class EnemyBullet : MonoBehaviour
+public class CottonCandyBullet : MonoBehaviour
 {
     [Header("Components")]
     private Rigidbody2D rig;
     [Header("Settings")]
     [SerializeField] private float moveSpeed;
-    [SerializeField] private int damage;
+    private int damage;
 
     void Awake()
     {
@@ -19,11 +18,15 @@ public class EnemyBullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent<Player>(out Player player))
+        if (collision.gameObject.TryGetComponent(out Enemy enemy))
         {
-            player.TakeDamage(damage);
+            if (!gameObject.activeSelf)
+            {
+                return;//说明已经被其他碰撞销毁
+            }
+            PlayerBulletManager.bulletPool.Release(this);
             LeanTween.cancel(gameObject);
-            EnemyBulletManager.pool.Release(this);
+            enemy.TakeDamage(damage);
         }
     }
 
@@ -33,11 +36,10 @@ public class EnemyBullet : MonoBehaviour
         transform.position = from;
         transform.up = direction;
         rig.velocity = direction * moveSpeed;
-        LeanTween.delayedCall(gameObject,2, () =>
+        LeanTween.delayedCall(gameObject, 2, () =>
         {
-            EnemyBulletManager.pool.Release(this);
+            PlayerBulletManager.bulletPool.Release(this);
         });
-        
-    }
 
+    }
 }
