@@ -9,6 +9,7 @@ public class CottonCandyBullet : MonoBehaviour
     private Rigidbody2D rig;
     [Header("Settings")]
     [SerializeField] private float moveSpeed;
+    [SerializeField] private Enemy target;
     private int damage;
 
     void Awake()
@@ -18,6 +19,10 @@ public class CottonCandyBullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (target != null)
+        {
+            return;
+        }
         if (collision.gameObject.TryGetComponent(out Enemy enemy))
         {
             if (!ReleaseBullet())
@@ -26,6 +31,7 @@ public class CottonCandyBullet : MonoBehaviour
             }
             LeanTween.cancel(gameObject);
             enemy.TakeDamage(damage);
+            target = enemy;
         }
     }
 
@@ -44,6 +50,7 @@ public class CottonCandyBullet : MonoBehaviour
 
     private bool ReleaseBullet()
     {
+        target = null;
         if (!gameObject.activeSelf)
         {
             return false;//说明已经被其他碰撞销毁
