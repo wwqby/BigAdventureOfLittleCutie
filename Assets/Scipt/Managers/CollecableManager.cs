@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class DropManager : MonoBehaviour
+public class CollecableManager : MonoBehaviour
 {
 
     [Header("Settings")]
     [SerializeField] private Candy candyPrefab;
     [SerializeField] private Cash cashPrefab;
+    [SerializeField] private Chest chestPrefab;
+    [SerializeField][Range(0, 100)] private int spawnCashChance;
+    [SerializeField][Range(0, 100)] private int spawnChestChance;
     [Header("Pooling")]
     private ObjectPool<BaseCollecable> candyPool;
     private ObjectPool<BaseCollecable> cashPool;
@@ -51,9 +54,20 @@ public class DropManager : MonoBehaviour
     }
     public void DropCandy(Vector2 postion)
     {
-        bool shouldDropCandy = Random.Range(0, 100) < 60;
-        BaseCollecable collecable = shouldDropCandy ? candyPool.Get() : cashPool.Get();
+        bool shouldSpawnCash = Random.Range(0, 100) < spawnCashChance;
+        BaseCollecable collecable = shouldSpawnCash ? cashPool.Get() : candyPool.Get();
         collecable.transform.position = postion;
+        TrySpawnChest(postion);
+    }
+
+    private void TrySpawnChest(Vector2 postion)
+    {
+        bool shouldSpawnChest = Random.Range(0, 100) < spawnChestChance;
+        if (!shouldSpawnChest)
+        {
+            return;
+        }
+        Instantiate(chestPrefab, postion, Quaternion.identity,transform);
     }
     #endregion
 }

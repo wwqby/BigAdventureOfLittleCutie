@@ -34,7 +34,8 @@ public class EffectsManager : MonoBehaviour
 
     private void ActionOnRelease(DamageText damageText)
     {
-        damageText.gameObject.SetActive(false);
+        if (damageText != null)
+            damageText.gameObject.SetActive(false);
     }
 
     private void ActionOnGet(DamageText damageText)
@@ -53,8 +54,8 @@ public class EffectsManager : MonoBehaviour
     {
         DamageText instance = DamageTextPool.Get();
         instance.transform.position = position + UnityEngine.Random.insideUnitCircle * 2f;
-        instance.ShowDamageText(damage,isCritical);
-        LeanTween.delayedCall(1.2f, () =>
+        instance.ShowDamageText(damage, isCritical);
+        LeanTween.delayedCall(2f, () =>
         {
             DamageTextPool.Release(instance);
         });
