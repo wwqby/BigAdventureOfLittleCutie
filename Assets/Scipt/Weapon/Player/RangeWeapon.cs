@@ -30,7 +30,7 @@ public class RangeWeapon : BaseWeapon
         Enemy enemy = GetClosetEnemy();
         if (enemy != null)
         {
-            targetVector = (enemy.CenterPoint - (Vector2)hitDetection.position).normalized;
+            targetVector = (enemy.CenterPoint - (Vector2)transform.position).normalized;
             transform.up = targetVector;
             ManageAttack();
             return;

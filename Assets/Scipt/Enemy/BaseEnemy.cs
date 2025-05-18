@@ -35,6 +35,7 @@ public abstract class BaseEnemy : MonoBehaviour, Enemy
     [SerializeField] protected ParticleSystem particle;
     [Header("Actions")]
     public static Action<int, bool, Vector2> OnTakeDamage;
+    public static Action<Vector2> onDie;
 
     [Header("Debug")]
     [SerializeField] protected bool gismos;
@@ -106,6 +107,7 @@ public abstract class BaseEnemy : MonoBehaviour, Enemy
             particle.transform.parent = null;
             particle.Play();
         }
+        onDie?.Invoke(CenterPoint);
         Destroy(gameObject);
     }
 

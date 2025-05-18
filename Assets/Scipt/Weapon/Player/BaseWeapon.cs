@@ -29,6 +29,7 @@ public abstract class BaseWeapon : MonoBehaviour
     [SerializeField] protected float aniLerp;
 
 
+
     protected virtual void Start()
     {
         state = State.Idel;
@@ -46,7 +47,7 @@ public abstract class BaseWeapon : MonoBehaviour
     protected Enemy GetClosetEnemy()
     {
         Enemy closetEnemy = null;
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(hitDetection.position, aimRadius, targetMask);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, aimRadius, targetMask);
         if (enemies.Length == 0)
         {
             return null;
