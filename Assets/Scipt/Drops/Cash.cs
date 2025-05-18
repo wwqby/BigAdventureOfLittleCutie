@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Candy : MonoBehaviour,ICollecable
+public class Cash : MonoBehaviour,ICollecable
 {
 
     public void Collect(Player player)

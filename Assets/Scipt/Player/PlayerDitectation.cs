@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerDitectation : MonoBehaviour
 {
     [Header("Components")]
-    [SerializeField] private CircleCollider2D playerCollider;
+    [SerializeField] private CircleCollider2D collecableCollider;
 
     // void FixedUpdate()
     // {
@@ -21,13 +21,13 @@ public class PlayerDitectation : MonoBehaviour
     // }
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Candy candy))
+        if (collision.TryGetComponent(out ICollecable collecable))
         {
-            if (!collision.IsTouching(playerCollider))
+            if (!collision.IsTouching(collecableCollider))
             {
                 return;
             }
-            candy.Collect(FindAnyObjectByType<Player>());
+            collecable.Collect(FindAnyObjectByType<Player>());
         }
     }
 }

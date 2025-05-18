@@ -4935,7 +4935,7 @@ GameObject:
   - component: {fileID: 1706468333}
   - component: {fileID: 1706468334}
   m_Layer: 0
-  m_Name: CandyManager
+  m_Name: DropManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4969,6 +4969,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   candyPrefab: {fileID: 5536484892920832894, guid: e7580855c6449a44680f69e47549048c, type: 3}
+  cashPrefab: {fileID: 7189779305599788379, guid: 8d918b6a755a7634290a02902e3ccd2b, type: 3}
 --- !u!1 &1858650231
 GameObject:
   m_ObjectHideFlags: 0
@@ -5427,6 +5428,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dave
       objectReference: {fileID: 0}
+    - target: {fileID: 8497215970091712208, guid: 8fec9179f4848184f9e978434361bd58, type: 3}
+      propertyPath: collecableCollider
+      value: 
+      objectReference: {fileID: 4016111975455682388}
     - target: {fileID: 9115228138458836698, guid: 8fec9179f4848184f9e978434361bd58, type: 3}
       propertyPath: healthBar
       value: 
@@ -5438,8 +5443,52 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9035147298053579108, guid: 8fec9179f4848184f9e978434361bd58, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4016111975455682388}
   m_SourcePrefab: {fileID: 100100000, guid: 8fec9179f4848184f9e978434361bd58, type: 3}
+--- !u!1 &4016111975455682387 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9035147298053579108, guid: 8fec9179f4848184f9e978434361bd58, type: 3}
+  m_PrefabInstance: {fileID: 4016111975455682386}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &4016111975455682388
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4016111975455682387}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.7}
+  m_Radius: 1.5
 --- !u!1001 &5192479191561323878
 PrefabInstance:
   m_ObjectHideFlags: 0
