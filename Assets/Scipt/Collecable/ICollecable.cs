@@ -5,4 +5,5 @@ using UnityEngine;
 public interface ICollecable
 {
    void Collect(Player player);
+   bool IsCollected();
 }

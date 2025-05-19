@@ -22,6 +22,11 @@ public abstract class BaseCollecable : MonoBehaviour, ICollecable
         StartCoroutine(FollowPlayer(player));
     }
 
+    public bool IsCollected()
+    {
+        return isCollected;
+    }
+
     IEnumerator FollowPlayer(Player player)
     {
         float timer = 0;
@@ -37,4 +42,5 @@ public abstract class BaseCollecable : MonoBehaviour, ICollecable
 
     protected abstract void Collected();
 
+    
 }

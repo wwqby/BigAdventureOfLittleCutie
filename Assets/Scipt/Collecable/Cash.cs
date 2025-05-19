@@ -5,7 +5,7 @@ public class Cash : BaseCollecable
 {
 
    [Header("Action")]
-   public static Action<BaseCollecable> OnCollected;
+   public static Action<Cash> OnCollected;
 
     protected override void Collected()
     {

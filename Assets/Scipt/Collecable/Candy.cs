@@ -5,7 +5,7 @@ public class Candy : BaseCollecable
 {
 
     [Header("Action")]
-    public static Action<BaseCollecable> OnCollected;
+    public static Action<Candy> OnCollected;
 
     protected override void Collected()
     {
