@@ -46,7 +46,6 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
-        timer += Time.deltaTime;
         if (currentWave >= waves.Length)
         {
             // Debug.Log("Spawen completed");
@@ -54,6 +53,8 @@ public class WaveManager : MonoBehaviour
             timerText.text = "";
             return;
         }
+
+        timer += Time.deltaTime;
         timerText.text = (int)(waves[currentWave].waveDuration - timer) + "";
         //检查wave
         Wave wave = waves[currentWave];
@@ -102,7 +103,7 @@ public class WaveManager : MonoBehaviour
 
     private void SpawnInTileMap(GameObject spawnObject)
     {
-        Vector2 position = player.GetCenterPoint() + UnityEngine.Random.insideUnitCircle * 5f;
+        Vector2 position = player.GetCenterPoint() + UnityEngine.Random.insideUnitCircle * UnityEngine.Random.Range(5,10);
         position.x = Mathf.Clamp(position.x, mapBound.bounds.min.x, mapBound.bounds.max.x);
         position.y = Mathf.Clamp(position.y, mapBound.bounds.min.y, mapBound.bounds.max.y);
         GameObject instance = Instantiate(spawnObject, transform.position, Quaternion.identity);//TODO pooling
