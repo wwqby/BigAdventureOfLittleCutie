@@ -27,21 +27,16 @@ public class CottonCandyBullet : MonoBehaviour
             return;
         }
         // if (collision.gameObject.TryGetComponent(out Enemy enemy))
-        if (IsInLayer(collision.gameObject.layer, LayerMask))
+        if (collision.gameObject.layer.IsInLayerMask(LayerMask))
         {
-
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.TakeDamage(damage,isCritical);
+            enemy.TakeDamage(damage, isCritical);
             target = enemy;
             LeanTween.cancel(gameObject);
             ReleaseBullet();
         }
     }
 
-    private bool IsInLayer(int layer, LayerMask layerMask)
-    {
-        return ((1 << layer) & layerMask.value) != 0;
-    }
 
     public void Shoot(Vector2 from, Vector2 direction, int damage, bool isCritical)
     {
