@@ -20,6 +20,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private int currentWave;
     [SerializeField] private int currentSegment;
     [SerializeField] private List<float> segmentTimer;
+    [SerializeField] private bool isTimerOn;
 
 
     void OnEnable()
@@ -41,11 +42,18 @@ public class WaveManager : MonoBehaviour
         {
             segmentTimer.Add(0f);
         }
+        isTimerOn = true;
     }
 
 
     void Update()
     {
+
+        if (!isTimerOn)
+        {
+            waveText.text = "Spawen Pause";
+            return;
+        }
         if (currentWave >= waves.Length)
         {
             // Debug.Log("Spawen completed");
@@ -58,39 +66,29 @@ public class WaveManager : MonoBehaviour
         timerText.text = (int)(waves[currentWave].waveDuration - timer) + "";
         //检查wave
         Wave wave = waves[currentWave];
-        if (currentSegment >= wave.waveSegments.Count)
+        if (IsWaveCompleted(wave))
         {
-            if (timer >= wave.waveDuration)
-            {
-                currentWave++;
-                currentSegment = 0;
-                segmentTimer.Clear();
-                segmentTimer.Add(0f);
-                timer = 0;
-                // Debug.Log("Wave completed");
-                waveText.text = "Wave " + (currentWave + 1);
-                return;
-            }
+            StartNextWave();
+            return;
         }
+
         //检查segment
         WaveSegment waveSegment = wave.waveSegments[currentSegment];
         float duration = wave.waveDuration;
         float from = waveSegment.timeFromTo.x * duration;
         float to = waveSegment.timeFromTo.y * duration;
-        if (timer < from)
+        if (IsSegmentsCompleted(timer, to))
         {
-            // Debug.Log("Timer" + timer + "<" + " from:" + from);
+            StartNextSegment();
             return;
         }
-        if (timer >= to)
-        {
-            currentSegment++;
-            segmentTimer.Add(0f);
-            // Debug.Log("Timer" + timer + ">=" + " to:" + to);
-            // Debug.Log("Segment completed");
-            return;
-        }
+
         //生成对象
+        SapwanRandomGameObject(waveSegment, from);
+    }
+
+    private void SapwanRandomGameObject(WaveSegment waveSegment, float from)
+    {
         float spawnDelay = 1f / waveSegment.spawnRate;
         if (timer >= segmentTimer[currentSegment] + from)
         {
@@ -98,12 +96,40 @@ public class WaveManager : MonoBehaviour
             segmentTimer[currentSegment] += spawnDelay;
             // Debug.Log("Spawning " + waveSegment.spawnObject.name + " at wave " + currentWave + " at segment " + currentSegment);
         }
+    }
 
+    private void StartNextSegment()
+    {
+        currentSegment++;
+        segmentTimer.Add(0f);
+        // Debug.Log("Timer" + timer + ">=" + " to:" + to);
+        // Debug.Log("Segment completed");
+    }
+
+    private bool IsSegmentsCompleted(float timer, float to)
+    {
+        return timer >= to;
+    }
+
+    private void StartNextWave()
+    {
+        currentWave++;
+        currentSegment = 0;
+        segmentTimer.Clear();
+        segmentTimer.Add(0f);
+        timer = 0;
+        // Debug.Log("Wave completed");
+        waveText.text = "Wave " + (currentWave + 1);
+    }
+
+    private bool IsWaveCompleted(Wave wave)
+    {
+        return currentSegment >= wave.waveSegments.Count && timer >= wave.waveDuration;
     }
 
     private void SpawnInTileMap(GameObject spawnObject)
     {
-        Vector2 position = player.GetCenterPoint() + UnityEngine.Random.insideUnitCircle * UnityEngine.Random.Range(5,10);
+        Vector2 position = player.GetCenterPoint() + UnityEngine.Random.insideUnitCircle * UnityEngine.Random.Range(5, 10);
         position.x = Mathf.Clamp(position.x, mapBound.bounds.min.x, mapBound.bounds.max.x);
         position.y = Mathf.Clamp(position.y, mapBound.bounds.min.y, mapBound.bounds.max.y);
         GameObject instance = Instantiate(spawnObject, transform.position, Quaternion.identity);//TODO pooling

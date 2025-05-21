@@ -4030,7 +4030,7 @@ MonoBehaviour:
   timerText: {fileID: 249875932}
   waves:
   - waveName: wave01
-    waveDuration: 20
+    waveDuration: 10
     waveSegments:
     - timeFromTo: {x: 0, y: 0.3}
       spawnRate: 1
@@ -4042,7 +4042,7 @@ MonoBehaviour:
       spawnRate: 3
       spawnObject: {fileID: 7795320357294777192, guid: 780bca7acae43294e9ab784e73b4138b, type: 3}
   - waveName: wave02
-    waveDuration: 30
+    waveDuration: 16
     waveSegments:
     - timeFromTo: {x: 0, y: 0.3}
       spawnRate: 3
@@ -4057,6 +4057,7 @@ MonoBehaviour:
   currentWave: 0
   currentSegment: 0
   segmentTimer: []
+  isTimerOn: 0
 --- !u!4 &1225580669 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6591545601084527664, guid: 58c0cd11590974844abe81dc64b54817, type: 3}
