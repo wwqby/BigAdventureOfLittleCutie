@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public static class ToolExtensions
 {
@@ -23,5 +25,23 @@ public static class ToolExtensions
             child.SetParent(null);
             Object.Destroy(child.gameObject);
         }
+    }
+
+
+    public static string FormatEnumName(this PlayerAttr attr)
+    {
+        string result = "";
+        string name = attr.ToString();
+        result += name[0];
+        for (int i = 1; i < name.Length; i++)
+        {
+            char c = name[i];
+            if (char.IsUpper(c))
+            {
+                result += " ";
+            }
+            result += c;
+        }
+        return result;
     }
 }
