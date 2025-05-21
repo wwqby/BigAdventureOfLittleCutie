@@ -15,7 +15,16 @@ public class PlayerLevel : MonoBehaviour
     [SerializeField] private int level;
     [SerializeField] private int currentXp;
     [SerializeField] private int requirXp;
+    [SerializeField] private int levelUpInWave;
+    public static PlayerLevel instance;
 
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+    }
     void OnEnable()
     {
         Candy.OnCollected += LevelGain;
@@ -41,6 +50,7 @@ public class PlayerLevel : MonoBehaviour
         {
             level++;
             currentXp -= requirXp;
+            levelUpInWave++;
             UpdateRequiredXp();
         }
         UpdateLevel();
@@ -54,5 +64,15 @@ public class PlayerLevel : MonoBehaviour
     {
         levelBar.value = currentXp / (float)requirXp;
         levelText.text = "Lvl " + level;
+    }
+
+    public bool HasLevelUpInWave()
+    {
+        if (levelUpInWave > 0)
+        {
+            levelUpInWave--;
+            return true;
+        }
+        return false;
     }
 }

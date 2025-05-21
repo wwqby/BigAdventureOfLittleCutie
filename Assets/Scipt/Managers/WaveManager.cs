@@ -6,7 +6,7 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 
-public class WaveManager : MonoBehaviour
+public class WaveManager : MonoBehaviour,IGameStateListener
 {
     [Header("Components")]
     [SerializeField] private BoxCollider2D mapBound;
@@ -19,7 +19,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private float timer;
     [SerializeField] private int currentWave;
     [SerializeField] private int currentSegment;
-    [SerializeField] private List<float> segmentTimer;
+    [SerializeField] private List<float> segmentTimer = new List<float>();
     [SerializeField] private bool isTimerOn;
 
 
@@ -35,15 +35,7 @@ public class WaveManager : MonoBehaviour
         timerText.text = "";
     }
 
-    void Start()
-    {
-        segmentTimer = new List<float>();
-        for (int i = 0; i <= currentSegment; i++)
-        {
-            segmentTimer.Add(0f);
-        }
-        isTimerOn = true;
-    }
+    
 
 
     void Update()
@@ -59,6 +51,8 @@ public class WaveManager : MonoBehaviour
             // Debug.Log("Spawen completed");
             waveText.text = "Spawen completed";
             timerText.text = "";
+            GameManager.instance.SetGameState(GameState.STAGE_COMPLETE);
+            isTimerOn = false;
             return;
         }
 
@@ -68,7 +62,8 @@ public class WaveManager : MonoBehaviour
         Wave wave = waves[currentWave];
         if (IsWaveCompleted(wave))
         {
-            StartNextWave();
+            StartWave(currentWave++);
+            GameManager.instance.WaveCompleteCallback();
             return;
         }
 
@@ -111,13 +106,14 @@ public class WaveManager : MonoBehaviour
         return timer >= to;
     }
 
-    private void StartNextWave()
+    private void StartWave(int waveIndex)
     {
-        currentWave++;
+        
         currentSegment = 0;
         segmentTimer.Clear();
         segmentTimer.Add(0f);
         timer = 0;
+        isTimerOn = true;
         // Debug.Log("Wave completed");
         waveText.text = "Wave " + (currentWave + 1);
     }
@@ -135,6 +131,19 @@ public class WaveManager : MonoBehaviour
         GameObject instance = Instantiate(spawnObject, transform.position, Quaternion.identity);//TODO pooling
         instance.transform.position = position;
 
+    }
+
+    public void OnGameStateChanged(GameState gameState)
+    {
+        switch (gameState)
+        {
+            case GameState.GAME:
+               StartWave(currentWave);
+                break;
+            // case GameState.WAVETRANSITION:
+            //     WaveCompleteCallback();
+            //     break;
+        }
     }
 }
 

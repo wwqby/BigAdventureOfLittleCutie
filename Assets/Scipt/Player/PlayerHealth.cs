@@ -49,8 +49,7 @@ public class PlayerHealth : MonoBehaviour
     }
     private void PassAway()
     {
-        Debug.Log("Player died");
-        //循环测试场景
-        SceneManager.LoadScene(0);
+        // Debug.Log("Player died");
+       GameManager.instance.SetGameState(GameState.GAMEOVER);
     }
 }
