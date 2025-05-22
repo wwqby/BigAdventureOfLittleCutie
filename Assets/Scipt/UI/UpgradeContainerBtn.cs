@@ -11,18 +11,13 @@ public class UpgradeContainerBtn : MonoBehaviour
     [SerializeField] private TextMeshProUGUI statsText;
     [SerializeField] private TextMeshProUGUI valueText;
     [field:SerializeField] public Button Button{get; private set;}
-    [Header("Settings")]
-    [field:SerializeField] public  PlayerAttr Attr{get; private set;}
-    [field:SerializeField] public  int AttrValue{get; private set;}
 
 
-    public void ConfigUpgradeBtn(Image icon, PlayerAttr attr, int value)
+    public void ConfigUpgradeBtn(Image icon, PlayerAttr attr, string valueString)
     {
         this.icon = icon;
-        this.Attr = attr;
-        this.AttrValue = value;
         statsText.text = attr.FormatEnumName();
-        valueText.text = value.ToString();
+        valueText.text = valueString;
         Button.onClick.RemoveAllListeners();
     }
 }
