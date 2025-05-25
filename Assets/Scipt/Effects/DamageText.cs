@@ -9,13 +9,18 @@ public class DamageText : MonoBehaviour
     [Header("components")]
     [SerializeField] private Animator damageAnimator;
     [SerializeField] private TextMeshPro damageText;
-    
+
 
     [NaughtyAttributes.Button]
-    public void ShowDamageText(int damage,bool isCritical)
+    public void ShowEffectText(string text, Color color)
     {
-        damageText.text = damage.ToString();
-        damageText.color = isCritical ? Color.yellow : Color.white;
-        damageAnimator.Play("DamageShow");
+        damageText.text = text;
+        damageText.color = color;
+        damageAnimator.Play("EffectTextShow");
+    }
+
+    public void ShowEffectText(string text)
+    {
+        ShowEffectText(text, Color.white);
     }
 }

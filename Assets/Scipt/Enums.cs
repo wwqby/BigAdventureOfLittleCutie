@@ -11,13 +11,14 @@ public enum GameState
     STAGE_COMPLETE
 }
 
-public enum PlayerAttr
+public enum Stats
 {
     Attack,
     AttackSpeed,
     CriticalChance,
     CriticalPercent,
     MoveSpeed,
+    MoveSpeedPercent,
     MaxHealth,
     Range,
     HealthRecoverySpeed,

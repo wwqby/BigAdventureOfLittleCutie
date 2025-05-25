@@ -28,7 +28,7 @@ public static class ToolExtensions
     }
 
 
-    public static string FormatEnumName(this PlayerAttr attr)
+    public static string FormatEnumName(this Stats attr)
     {
         string result = "";
         string name = attr.ToString();

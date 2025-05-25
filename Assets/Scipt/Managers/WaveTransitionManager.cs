@@ -11,6 +11,7 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 {
     [Header("Elements")]
     [SerializeField] private UpgradeContainerBtn[] btnList;
+    [SerializeField] private PlayerStatsManager playerStatsManager;
 
 
     public void OnGameStateChanged(GameState gameState)
@@ -26,66 +27,56 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
     {
         foreach (UpgradeContainerBtn btn in btnList)
         {
-            int randomIndex = Random.Range(0, Enum.GetValues(typeof(PlayerAttr)).Length);
-            PlayerAttr attr = (PlayerAttr)Enum.GetValues(typeof(PlayerAttr)).GetValue(randomIndex);
+            int randomIndex = Random.Range(0, Enum.GetValues(typeof(Stats)).Length);
+            Stats statsString = (Stats)Enum.GetValues(typeof(Stats)).GetValue(randomIndex);
             int value = Random.Range(1, 20);
-            Action action = GetActionByAttr(attr,out  string valueString);
-            btn.ConfigUpgradeBtn(null, attr, valueString);
+            Action action = GetActionByStats(statsString, out string valueString);
+            btn.ConfigUpgradeBtn(null, statsString, valueString);
             btn.Button.onClick.AddListener(() => action?.Invoke());
             btn.Button.onClick.AddListener(() => GameManager.instance.WaveCompleteCallback());
         }
     }
-    
-    private Action GetActionByAttr(PlayerAttr attr, out string valueString)
+
+    private Action GetActionByStats(Stats stats, out string valueString)
     {
         float value = Random.Range(1, 10);
         valueString = $"+{value}%";
-        Action action = null;
-        switch (attr)
+        Action action = () => playerStatsManager.UpgradeStats(stats, value);
+        switch (stats)
         {
-            case PlayerAttr.Attack:
+            case Stats.Attack:
                 valueString = $"+{value}";
-                action = () => Debug.Log("attack");
                 break;
-            case PlayerAttr.AttackSpeed:
-                action = () => Debug.Log("AttackSpeed");
+            case Stats.AttackSpeed:
                 break;
-            case PlayerAttr.CriticalChance:
-                action = () => Debug.Log("CriticalChance");
+            case Stats.CriticalChance:
                 break;
-            case PlayerAttr.CriticalPercent:
-                action = () => Debug.Log("CriticalPercent");
+            case Stats.CriticalPercent:
                 break;
-            case PlayerAttr.MoveSpeed:
-                action = () => Debug.Log("MoveSpeed");
+            case Stats.MoveSpeed:
+            case Stats.MoveSpeedPercent:
                 break;
-            case PlayerAttr.MaxHealth:
+            case Stats.MaxHealth:
                 valueString = $"+{value}";
-                action = () => Debug.Log("MaxHealth");
                 break;
-            case PlayerAttr.Range:
-                action = () => Debug.Log("Range");
+            case Stats.Range:
                 break;
-            case PlayerAttr.HealthRecoverySpeed:
+            case Stats.HealthRecoverySpeed:
                 valueString = $"+{value}";
-                action = () => Debug.Log("HealthRecoverySpeed");
                 break;
-            case PlayerAttr.Armor:
+            case Stats.Armor:
                 valueString = $"+{value}";
-                action = () => Debug.Log("Armor");
                 break;
-            case PlayerAttr.Luck:
+            case Stats.Luck:
                 valueString = $"+{value}";
-                action = () => Debug.Log("Luck");
                 break;
-            case PlayerAttr.Dodge:
-                action = () => Debug.Log("Dodge");
+            case Stats.Dodge:
                 break;
-            case PlayerAttr.LifeSteel:
-                action = () => Debug.Log("LifeSteel");
+            case Stats.LifeSteel:
                 break;
             default:
-                return () => Debug.Log("default:" + attr.ToString());
+                action = () => Debug.LogWarning("unknown stats:" + stats.ToString());
+                break;
         }
         return action;
     }

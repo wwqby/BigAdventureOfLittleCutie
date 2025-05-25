@@ -14,14 +14,18 @@ public class EffectsManager : MonoBehaviour
     void OnEnable()
     {
         BaseEnemy.OnTakeDamage += ShowDamageTextOnPosition;
+        PlayerHealth.OnAttackDodged += ShowDodgeTextOnPosition;
     }
 
     void OnDisable()
     {
         BaseEnemy.OnTakeDamage -= ShowDamageTextOnPosition;
+        PlayerHealth.OnAttackDodged -= ShowDodgeTextOnPosition;
     }
 
-    void Start()
+
+
+    void Awake()
     {
         DamageTextPool = new ObjectPool<DamageText>(CreateFucc, ActionOnGet, ActionOnRelease, ActionOnDestory);
     }
@@ -54,7 +58,18 @@ public class EffectsManager : MonoBehaviour
     {
         DamageText instance = DamageTextPool.Get();
         instance.transform.position = position + UnityEngine.Random.insideUnitCircle * 2f;
-        instance.ShowDamageText(damage, isCritical);
+        instance.ShowEffectText(damage.ToString(), isCritical ? Color.yellow : Color.white);
+        LeanTween.delayedCall(2f, () =>
+        {
+            DamageTextPool.Release(instance);
+        });
+    }
+
+    private void ShowDodgeTextOnPosition(Vector2 pos)
+    {
+        DamageText instance = DamageTextPool.Get();
+        instance.transform.position = pos + UnityEngine.Random.insideUnitCircle * 2f;
+        instance.ShowEffectText("Dodge");
         LeanTween.delayedCall(2f, () =>
         {
             DamageTextPool.Release(instance);

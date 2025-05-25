@@ -7,8 +7,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
     public static GameManager instance;
+    [Header("Settings")]
+    public GameState GameState { get; private set; }
 
 
     void Awake()
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     public void SetGameState(GameState gameState)
     {
+        GameState = gameState;
         IEnumerable<IGameStateListener> listeners = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IGameStateListener>();
         foreach (IGameStateListener listener in listeners)
         {

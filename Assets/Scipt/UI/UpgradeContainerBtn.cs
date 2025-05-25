@@ -13,7 +13,7 @@ public class UpgradeContainerBtn : MonoBehaviour
     [field:SerializeField] public Button Button{get; private set;}
 
 
-    public void ConfigUpgradeBtn(Image icon, PlayerAttr attr, string valueString)
+    public void ConfigUpgradeBtn(Image icon, Stats attr, string valueString)
     {
         this.icon = icon;
         statsText.text = attr.FormatEnumName();
