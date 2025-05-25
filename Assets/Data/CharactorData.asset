@@ -15,15 +15,15 @@ MonoBehaviour:
   <Name>k__BackingField: Dave
   <Sprite>k__BackingField: {fileID: 21300000, guid: 95cd4e99917ba734bafe9d543625fe72, type: 3}
   <PurchasePrice>k__BackingField: 0
-  attack: 0
-  AttackSpeed: 1
-  CriticalChance: 0
-  CriticalPercent: 0
+  attack: 50
+  AttackSpeed: 100
+  CriticalChance: 10
+  CriticalPercent: 100
   MoveSpeed: 3
   MoveSpeedPercent: 10
   MaxHealth: 100
-  Range: 0
-  HealthRecoverySpeed: 0
+  Range: 10
+  HealthRecoverySpeed: 100
   Armor: 100
   Luck: 50
   Dodge: 50

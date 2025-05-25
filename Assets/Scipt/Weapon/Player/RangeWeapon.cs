@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 public class RangeWeapon : BaseWeapon
 {
-
-    // Update is called once per frame
     void Update()
     {
         switch (state)
@@ -54,12 +52,12 @@ public class RangeWeapon : BaseWeapon
 
     private void ShootBullet()
     {
-        int damage = GetDamage(out bool isCritical);
+        float damage = GetDamage(out bool isCritical);
         CottonCandyBullet cottonCandyBullet = PlayerBulletManager.bulletPool.Get();
         cottonCandyBullet.Shoot(
             hitDetection.position,
             transform.up.normalized,
-            damage,isCritical);
+            damage, isCritical);
         state = State.Idel;
     }
 

@@ -13,7 +13,7 @@ public class CottonCandyBullet : MonoBehaviour
     [SerializeField] private LayerMask LayerMask;
     [SerializeField] private Enemy target;
     [SerializeField] private bool isCritical;
-    private int damage;
+    private float damage;
 
     void Awake()
     {
@@ -38,7 +38,7 @@ public class CottonCandyBullet : MonoBehaviour
     }
 
 
-    public void Shoot(Vector2 from, Vector2 direction, int damage, bool isCritical)
+    public void Shoot(Vector2 from, Vector2 direction, float damage, bool isCritical)
     {
         this.damage = damage;
         this.isCritical = isCritical;

@@ -54,11 +54,11 @@ public class EffectsManager : MonoBehaviour
 
     #endregion
 
-    private void ShowDamageTextOnPosition(int damage, bool isCritical, Vector2 position)
+    private void ShowDamageTextOnPosition(float damage, bool isCritical, Vector2 position)
     {
         DamageText instance = DamageTextPool.Get();
         instance.transform.position = position + UnityEngine.Random.insideUnitCircle * 2f;
-        instance.ShowEffectText(damage.ToString(), isCritical ? Color.yellow : Color.white);
+        instance.ShowEffectText(damage.ToString("f0"), isCritical ? Color.yellow : Color.white);
         LeanTween.delayedCall(2f, () =>
         {
             DamageTextPool.Release(instance);

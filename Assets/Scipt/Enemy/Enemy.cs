@@ -7,5 +7,5 @@ public interface Enemy
     GameObject gameObject { get; }
     Vector2 CenterPoint { get; }
 
-    void TakeDamage(int damage, bool isCritical);
+    void TakeDamage(float damage, bool isCritical);
 }

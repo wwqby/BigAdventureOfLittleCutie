@@ -74,7 +74,7 @@ public class MeleeWeapon : BaseWeapon
 
     private void Attacking()
     {
-        int damage = GetDamage(out bool isCritical);
+        float damage = GetDamage(out bool isCritical);
         Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(hitDetection.position, boxCollider.bounds.size, hitDetection.localEulerAngles.z, targetMask);
         foreach (Collider2D hitEnem in hitEnemies)
         {
@@ -92,6 +92,7 @@ public class MeleeWeapon : BaseWeapon
         state = State.Idel;
         damagedEnemies.Clear();
     }
+
 
     #endregion
 

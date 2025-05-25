@@ -12361,6 +12361,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2038971126}
     m_Modifications:
+    - target: {fileID: 302671465877013774, guid: 8fec9179f4848184f9e978434361bd58, type: 3}
+      propertyPath: <WeaponDataSO>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: c71252e100fc01e40a23442cb4b95db3, type: 2}
     - target: {fileID: 571132743662716020, guid: 8fec9179f4848184f9e978434361bd58, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -12461,6 +12465,10 @@ PrefabInstance:
       propertyPath: damage
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 9188853711522613452, guid: 8fec9179f4848184f9e978434361bd58, type: 3}
+      propertyPath: <WeaponDataSO>k__BackingField
+      value: 
+      objectReference: {fileID: 11400000, guid: 41ca149e5fa1ee845b05a9f71e2494ae, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

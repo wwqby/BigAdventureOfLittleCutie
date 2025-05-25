@@ -64,7 +64,7 @@ public class PlayerHealth : MonoBehaviour, IPlayerStatsListener
         }
     }
 
-    private void OnAttackLifeSteel(int damage, bool isCritical, Vector2 pos)
+    private void OnAttackLifeSteel(float damage, bool isCritical, Vector2 pos)
     {
         if (health > maxHealth)
             return;

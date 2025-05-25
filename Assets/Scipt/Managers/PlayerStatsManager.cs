@@ -24,8 +24,6 @@ public class PlayerStatsManager : MonoBehaviour
 
     void Start()
     {
-        //TODO
-        appends[Stats.MaxHealth] = 10;
         UpdatePlayerStats();
     }
     public void UpgradeStats(Stats stats, float value)

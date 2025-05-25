@@ -3,30 +3,22 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CharactorData",
-menuName = "ScriptableObjects/CharactorData", order = 0)]
-public class CharactorDataSO : ScriptableObject
+[CreateAssetMenu(fileName = "WeaponDataSO",
+menuName = "ScriptableObjects/WeaponDataSO", order = 1)]
+public class WeaponDataSO : ScriptableObject
 {
     [field: SerializeField] public string Name { get; private set; }
     [field: SerializeField] public Sprite Sprite { get; private set; }
     [field: SerializeField] public int PurchasePrice { get; private set; }
-
-
+    [field: SerializeField] public BaseWeapon Prefab { get; private set; }
 
     [HorizontalLine]
     [SerializeField] private float attack;
     [SerializeField] private float AttackSpeed;
     [SerializeField] private float CriticalChance;
     [SerializeField] private float CriticalPercent;
-    [SerializeField] private float MoveSpeed;
-    [SerializeField] private float MoveSpeedPercent;
-    [SerializeField] private float MaxHealth;
     [SerializeField] private float Range;
-    [SerializeField] private float HealthRecoverySpeed;
-    [SerializeField] private float Armor;
-    [SerializeField] private float Luck;
-    [SerializeField] private float Dodge;
-    [SerializeField] private float LifeSteel;
+
 
     public Dictionary<Stats, float> BaseStats
     {
@@ -38,19 +30,22 @@ public class CharactorDataSO : ScriptableObject
             {Stats.AttackSpeed, AttackSpeed},
             {Stats.CriticalChance, CriticalChance},
             {Stats.CriticalPercent, CriticalPercent},
-            {Stats.MoveSpeed, MoveSpeed},
-            {Stats.MoveSpeedPercent, MoveSpeedPercent},
-            {Stats.MaxHealth, MaxHealth},
             {Stats.Range, Range},
-            {Stats.HealthRecoverySpeed, HealthRecoverySpeed},
-            {Stats.Armor, Armor},
-            {Stats.Luck, Luck},
-            {Stats.Dodge, Dodge},
-            {Stats.LifeSteel, LifeSteel},
         };
         }
         private set { }
     }
 
-
+    public float GetValue(Stats stats)
+    {
+        foreach (KeyValuePair<Stats, float> item in BaseStats)
+        {
+            if (item.Key == stats)
+            {
+                return item.Value;
+            }
+        }
+        Debug.LogError("No stats found");
+        return 0f;
+    }
 }

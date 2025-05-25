@@ -29,12 +29,12 @@ public abstract class BaseEnemy : MonoBehaviour, Enemy
 
 
     [Header("Health")]
-    [SerializeField] protected int health;
-    [SerializeField] protected int maxHealth;
+    [SerializeField] protected float health;
+    [SerializeField] protected float maxHealth;
     [Header("Effects")]
     [SerializeField] protected ParticleSystem particle;
     [Header("Actions")]
-    public static Action<int, bool, Vector2> OnTakeDamage;
+    public static Action<float, bool, Vector2> OnTakeDamage;
     public static Action<Vector2> onDie;
 
     [Header("Debug")]
@@ -42,9 +42,9 @@ public abstract class BaseEnemy : MonoBehaviour, Enemy
 
     public Vector2 CenterPoint => (Vector2)transform.position + collider2D.offset;
 
-    public void TakeDamage(int damage, bool isCritical)
+    public void TakeDamage(float damage, bool isCritical)
     {
-        int realHealth = Mathf.Min(damage, health);
+        float realHealth = Mathf.Min(damage, health);
         health -= realHealth;
         healthText.text = health.ToString();
         if (health <= 0)
