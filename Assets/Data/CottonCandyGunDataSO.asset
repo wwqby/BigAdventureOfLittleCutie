@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c0dbdd7e77c8e641b55402d4b4605c0, type: 3}
   m_Name: CottonCandyGunDataSO
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: CottonCandyGun
+  <WeaponName>k__BackingField: CottonCandyGun
   <Sprite>k__BackingField: {fileID: 21300000, guid: 84f07b27a38eda042b5858622cbeaf52, type: 3}
   <PurchasePrice>k__BackingField: 100
   <Prefab>k__BackingField: {fileID: 511688227467614067, guid: 3d7de0e0692d39d4bb5d9edb472ad682, type: 3}

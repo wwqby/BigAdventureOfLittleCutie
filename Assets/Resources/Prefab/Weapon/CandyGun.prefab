@@ -177,7 +177,7 @@ Transform:
   m_GameObject: {fileID: 6207280448030616708}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -219,17 +219,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  animator: {fileID: 0}
-  boxCollider: {fileID: 0}
+  <WeaponDataSO>k__BackingField: {fileID: 11400000, guid: 41ca149e5fa1ee845b05a9f71e2494ae, type: 2}
+  animator: {fileID: 8026185433446642216}
   hitDetection: {fileID: 298014295486945037}
-  hitDetectionRadius: 6
+  level: 0
   damage: 3
   attackRatePerSecond: 1
+  cirticalChance: 0
+  cirticalPercent: 0
+  range: 0
   attackDelay: 0
   attackTimer: 0
-  aimRadius: 0
   targetMask:
     serializedVersion: 2
     m_Bits: 64
   aniLerp: 0.2
-  prefab: {fileID: 3220006862382798301, guid: 6b5ca7fbc66e8e24fb19a114b1241fa8, type: 3}

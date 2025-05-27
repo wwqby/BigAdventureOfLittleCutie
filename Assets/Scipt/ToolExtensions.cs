@@ -17,15 +17,15 @@ public static class ToolExtensions
     /*
     * Clear all children of transform
     */
-    public static void Clear(this Transform transform)
-    {
-        while (transform.childCount > 0)
-        {
-            Transform child = transform.GetChild(0);
-            child.SetParent(null);
-            Object.Destroy(child.gameObject);
-        }
-    }
+    // public static void Clear(this Transform transform)
+    // {
+    //     while (transform.childCount > 0)
+    //     {
+    //         Transform child = transform.GetChild(0);
+    //         child.SetParent(null);
+    //         Object.Destroy(child.gameObject);
+    //     }
+    // }
 
 
     public static string FormatEnumName(this Stats attr)

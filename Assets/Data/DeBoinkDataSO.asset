@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c0dbdd7e77c8e641b55402d4b4605c0, type: 3}
   m_Name: DeBoinkDataSO
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: DeBoink
+  <WeaponName>k__BackingField: DeBoink
   <Sprite>k__BackingField: {fileID: 5485319108022510092, guid: 15c981701acaf3f4b840cf2f1f7d3446, type: 3}
   <PurchasePrice>k__BackingField: 0
   <Prefab>k__BackingField: {fileID: 6195524282248130046, guid: fdcad052dcfa1794d874c50bba551c35, type: 3}

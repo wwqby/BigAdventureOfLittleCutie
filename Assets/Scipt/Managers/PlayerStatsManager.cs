@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerStatsManager : MonoBehaviour
 {
+    public static PlayerStatsManager instance;
     [Header("Data")]
     [SerializeField] private CharactorDataSO charactorData;
     [Header("Elements")]
@@ -15,6 +16,15 @@ public class PlayerStatsManager : MonoBehaviour
 
     void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
         playerStats = charactorData.BaseStats;
         foreach (KeyValuePair<Stats, float> item in playerStats)
         {

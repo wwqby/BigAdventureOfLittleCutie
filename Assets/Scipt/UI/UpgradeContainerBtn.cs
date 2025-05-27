@@ -13,9 +13,9 @@ public class UpgradeContainerBtn : MonoBehaviour
     [field:SerializeField] public Button Button{get; private set;}
 
 
-    public void ConfigUpgradeBtn(Image icon, Stats attr, string valueString)
+    public void ConfigUpgradeBtn(Sprite icon, Stats attr, string valueString)
     {
-        this.icon = icon;
+        this.icon.sprite = icon;
         statsText.text = attr.FormatEnumName();
         valueText.text = valueString;
         Button.onClick.RemoveAllListeners();

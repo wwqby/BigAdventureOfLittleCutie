@@ -16,6 +16,7 @@ public abstract class BaseWeapon : MonoBehaviour, IPlayerStatsListener
     [SerializeField] protected Transform hitDetection;
 
     [Header("Attack")]
+    [SerializeField] protected int level;
     [SerializeField] protected float damage;
     [SerializeField] protected float attackRatePerSecond;
     [SerializeField] protected float cirticalChance;
@@ -72,7 +73,7 @@ public abstract class BaseWeapon : MonoBehaviour, IPlayerStatsListener
         if (UnityEngine.Random.Range(1, 101) <= cirticalChance)
         {
             isCritical = true;
-            return damage * cirticalPercent;
+            return damage * cirticalPercent / 100f;
         }
         isCritical = false;
         return damage;
@@ -80,7 +81,8 @@ public abstract class BaseWeapon : MonoBehaviour, IPlayerStatsListener
 
     protected void ConfigureStats()
     {
-        damage = WeaponDataSO.GetValue(Stats.Attack);
+        float multiplier = 1 + level / 3f;
+        damage = WeaponDataSO.GetValue(Stats.Attack) * multiplier;
         attackRatePerSecond = WeaponDataSO.GetValue(Stats.AttackSpeed);
         attackDelay = 1f / attackRatePerSecond;
         cirticalChance = WeaponDataSO.GetValue(Stats.CriticalChance);
@@ -106,6 +108,12 @@ public abstract class BaseWeapon : MonoBehaviour, IPlayerStatsListener
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, range);
 
+    }
+
+    public void ConfigureWeapon(int level)
+    {
+        this.level = level;
+        OnPlayerStatsChanged(PlayerStatsManager.instance);
     }
 
 
